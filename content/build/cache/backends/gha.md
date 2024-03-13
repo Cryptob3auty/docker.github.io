@@ -13,9 +13,10 @@ aliases:
 { .restricted }
 
 The GitHub Actions cache utilizes the
-[GitHub-provided Action's cache](https://github.com/actions/cache) available
-from within your CI execution environment. This is the recommended cache to use
-inside your GitHub action pipelines, as long as your use case falls within the
+[GitHub-provided Action's cache](https://github.com/actions/cache) or other
+cache services supporting the GitHub Actions cache protocol. This is the
+recommended cache to use inside your GitHub Actions workflows, as long as your
+use case falls within the
 [size and usage limits set by GitHub](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#usage-limits-and-eviction-policy).
 
 This cache storage backend is not supported with the default `docker` driver.
@@ -33,13 +34,14 @@ $ docker buildx build --push -t <registry>/<image> \
 The following table describes the available CSV parameters that you can pass to
 `--cache-to` and `--cache-from`.
 
-| Name           | Option                  | Type        | Default                  | Description                                         |
-|----------------|-------------------------|-------------|--------------------------|-----------------------------------------------------|
-| `url`          | `cache-to`,`cache-from` | String      | `$ACTIONS_CACHE_URL`     | Cache server URL, see [authentication][1].          |
-| `token`        | `cache-to`,`cache-from` | String      | `$ACTIONS_RUNTIME_TOKEN` | Access token, see [authentication][1].              |
-| `scope`        | `cache-to`,`cache-from` | String      | `buildkit`               | Which scope cache object belongs to, see [scope][2] |
-| `mode`         | `cache-to`              | `min`,`max` | `min`                    | Cache layers to export, see [cache mode][3].        |
-| `ignore-error` | `cache-to`              | Boolean     | `false`                  | Ignore errors caused by failed cache exports.       |
+| Name           | Option                  | Type        | Default                  | Description                                                          |
+| -------------- | ----------------------- | ----------- | ------------------------ | -------------------------------------------------------------------- |
+| `url`          | `cache-to`,`cache-from` | String      | `$ACTIONS_CACHE_URL`     | Cache server URL, see [authentication][1].                           |
+| `token`        | `cache-to`,`cache-from` | String      | `$ACTIONS_RUNTIME_TOKEN` | Access token, see [authentication][1].                               |
+| `scope`        | `cache-to`,`cache-from` | String      | `buildkit`               | Which scope cache object belongs to, see [scope][2]                  |
+| `mode`         | `cache-to`              | `min`,`max` | `min`                    | Cache layers to export, see [cache mode][3].                         |
+| `ignore-error` | `cache-to`              | Boolean     | `false`                  | Ignore errors caused by failed cache exports.                        |
+| `timeout`      | `cache-to`,`cache-from` | String      | `10m`                    | Max duration for importing or exporting cache before it's timed out. |
 
 [1]: #authentication
 [2]: #scope

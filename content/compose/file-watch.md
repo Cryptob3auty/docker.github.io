@@ -17,7 +17,7 @@ For many projects, this allows for a hands-off development workflow once Compose
 * Directories are watched recursively
 * Glob patterns aren't supported
 * Rules from `.dockerignore` apply
-  * Use `include` / `exclude` to override
+  * Use `ignore` to defined additional paths to be ignored (same syntax)
   * Temporary/backup files for common IDEs (Vim, Emacs, JetBrains, & more) are ignored automatically
   * `.git` directories are ignored automatically
 
@@ -52,6 +52,20 @@ In order to work properly, `watch` relies on common executables. Make sure your 
 * mkdir
 * rmdir
 * tar
+
+`watch` also requires that the container's `USER` can write to the target path so it can update files. A common pattern is for 
+initial content to be copied into the container using the `COPY` instruction in a Dockerfile. To ensure such files are owned 
+by the configured user, use the `COPY --chown` flag:
+
+```dockerfile
+# Run as a non-privileged user
+FROM node:18-alpine
+RUN useradd -ms /bin/sh -u 1001 app
+USER app
+
+# Copy source files into application directory
+COPY --chown=app:app . /app
+```
 
 ### `action`
 
@@ -155,3 +169,7 @@ This pattern can be followed for many languages and frameworks, such as Python w
 ## Feedback
 
 We are actively looking for feedback on this feature. Give feedback or report any bugs you may find in the [Compose Specification repository](https://github.com/compose-spec/compose-spec/pull/253).
+
+## Reference
+
+- [Compose Develop Specification](compose-file/develop.md)

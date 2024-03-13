@@ -25,7 +25,7 @@ stack up against the image you run in production.
 ## Steps
 
 First, set up the GitHub Action workflow to build an image. This isn't specific
-to Docker Scout here, but you'll need to create build an image to have
+to Docker Scout here, but you'll need to build an image to have
 something to compare with.
 
 Add the following to a GitHub Actions YAML file:
@@ -52,7 +52,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      pull_request: write
+      pull-requests: write
 
 steps:
   - name: Checkout repository
@@ -143,7 +143,7 @@ image comparison:
     to-env: production
     ignore-unchanged: true
     only-severities: critical,high
-    token: ${{ secrets.DOCKER_PAT }}
+    github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 The compare command analyzes the image and evaluates policy compliance, and

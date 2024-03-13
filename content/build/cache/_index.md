@@ -50,15 +50,19 @@ anything differently, they still need to re-run.
 
 > **Note**
 >
-> Suppose you have a `RUN apt-get update && apt-get upgrade -y` step in your
-> Dockerfile to upgrade all the software packages in your Debian-based image to
-> the latest version.
+> Suppose you have a step in your Dockerfile
+> to upgrade all the software packages in your
+> Debian-based image to the latest version:
+>
+> ```dockerfile
+> RUN apt-get update && apt-get upgrade -y
+> ```
 >
 > This doesn't mean that the images you build are always up to date. Rebuilding
 > the image on the same host one week later will still get you the same packages
 > as before. The only way to force a rebuild is by making sure that a layer
 > before it has changed, or by clearing the build cache using
-> [`docker builder prune`](../../engine/reference/commandline/builder_prune/).
+> [`docker builder prune`](../../reference/cli/docker/builder/prune.md).
 
 ## How can I use the cache efficiently?
 
@@ -243,7 +247,7 @@ stages in parallel. Only the instructions in the `site` stage will end up as
 layers in the final image. The entire `git` history doesn't get embedded into
 the final result, which helps keep the image small and secure.
 
-#### Combine commands together wherever possible.
+#### Combine commands together wherever possible
 
 Most Dockerfile commands, and `RUN` commands in particular, can often be joined
 together. For example, instead of using `RUN` like this:

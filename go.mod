@@ -5,11 +5,19 @@ go 1.21
 toolchain go1.21.1
 
 require (
-	github.com/compose-spec/compose-spec v0.0.0-20231121152139-478928e7c9f8 // indirect
-	github.com/docker/buildx v0.12.0 // indirect
-	github.com/docker/cli v24.0.8-0.20231106123152-48ec4f339e2b+incompatible // indirect
-	github.com/docker/compose/v2 v2.23.3 // indirect
-	github.com/docker/scout-cli v1.2.0 // indirect
-	github.com/moby/buildkit v0.13.0-beta1.0.20231113205014-1efcd30d9dd6 // indirect
-	github.com/moby/moby v24.0.5+incompatible // indirect
+	github.com/docker/buildx v0.12.0-rc2.0.20231219140829-617f538cb315 // indirect
+	github.com/docker/cli v26.0.0-rc1+incompatible // indirect
+	github.com/docker/compose/v2 v2.24.7 // indirect
+	github.com/docker/scout-cli v1.4.1 // indirect
+	github.com/moby/buildkit v0.13.0 // indirect
+	github.com/moby/moby v25.0.4+incompatible // indirect
+)
+
+replace (
+	github.com/docker/buildx => github.com/docker/buildx v0.13.1-0.20240307093612-37b7ad1465d2
+	github.com/docker/cli => github.com/docker/cli v25.0.4+incompatible
+	github.com/docker/compose/v2 => github.com/docker/compose/v2 v2.24.7
+	github.com/docker/scout-cli => github.com/docker/scout-cli v1.4.1
+	github.com/moby/buildkit => github.com/moby/buildkit v0.13.0-rc3.0.20240308080452-a38011b9f57d
+	github.com/moby/moby => github.com/moby/moby v25.0.4+incompatible
 )

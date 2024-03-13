@@ -2,7 +2,7 @@
 description: >
   Use roles in your organization to control who has access to content,
   registry, and organization management permissions.
-keywords: members, teams, organization, company, roles, access, docker hub, docker admin, security 
+keywords: members, teams, organization, company, roles, access, docker hub, admin console, security 
 title: Roles and permissions
 aliases:
 - /docker-hub/roles-and-permissions/
@@ -21,7 +21,7 @@ The following roles are available to assign:
 - **Organization owner** - Full organization administrative access. Organization owners can manage organization repositories, teams, members, settings, and billing.
 - **Company owner** - In addition to the permissions of an organization owner, company owners can configure settings for their associated organizations.
 
-Owners can manage roles for members of an organization on [Docker Hub](/docker-hub/members/#update-a-member-role), as well members of an [organization](/admin/organization/members/#update-a-member-role) or a [company](/admin/company/users/#update-a-member-role) on [Docker Admin](/admin/).
+Owners can manage roles for members of an organization on [Docker Hub](/admin/organization/members/#update-a-member-role), as well members of an [organization](/admin/organization/members/#update-a-member-role) or a [company](/admin/company/users/#update-a-member-role) in the [Docker Admin Console](/admin/).
 
 ## Permissions
 
@@ -50,7 +50,7 @@ Company owners have the same access as organization owners for all associated or
 | View teams                                            | ❌     | ✅     | ✅                 |
 | Assign team permissions to repositories               | ❌     | ✅     | ✅                 |
 
-When you add members to a team, you can manage their repository permissions. For team repository permissions, see [Create and manage a team permissions reference](/docker-hub/manage-a-team/#permissions-reference).
+When you add members to a team, you can manage their repository permissions. For team repository permissions, see [Create and manage a team permissions reference](/admin/organization/manage-a-team/#permissions-reference).
 
 See the following diagram for an example of how permissions may work for a user. In this example, the first permission check is for the role: member or editor. Editors have administrative permissions for repositories across the namespace of the organization. Members may have administrative permissions for a repository if they're a member of a team that grants those permissions.
 
@@ -74,7 +74,7 @@ The following outlines organization management permissions for member, editor, o
 | Image Access Management                                           | ❌     | ❌     | ✅                 | ✅            |
 | Registry Access Management                                        | ❌     | ❌     | ✅                 | ✅            |
 | Set up Single Sign-On (SSO) and SCIM                              | ❌     | ❌     | ✅ \*              | ✅            |
-| Require Desktop sign-in                                           | ❌     | ❌     | ✅ \*              | ✅            |
+| Require Docker Desktop sign-in                                    | ❌     | ❌     | ✅ \*              | ✅            |
 | Manage billing information (e.g. billing address)                 | ❌     | ❌     | ✅                 | ✅            |
 | Manage payment methods (e.g. credit card or invoice)              | ❌     | ❌     | ✅                 | ✅            |
 | View billing history                                              | ❌     | ❌     | ✅                 | ✅            |
@@ -95,3 +95,19 @@ The following outlines Docker Scout management permissions for member, editor, a
 | Activate and deactivate Docker Scout for a repository | ❌     | ✅     | ✅                 |
 | Create environments                                   | ❌     | ❌     | ✅                 |
 | Manage registry integrations                          | ❌     | ❌     | ✅                 |
+
+### Docker Build Cloud
+
+The following outlines Docker Build Cloud management permissions for member, editor, and organization owner roles.
+
+| Permission                   | Member | Editor | Organization owner |
+| ---------------------------- | :----- | :----- | :----------------- |
+| Sign up for starter plan     | ✅     | ✅     | ✅                 |
+| Use a cloud builder          | ✅ \*  | ✅ \*  | ✅ \*              |
+| Manage seat allocation       | ✅     | ✅     | ✅                 |
+| Create and remove builders   | ✅     | ✅     | ✅                 |
+| Buy seats or reduce seat cap | ❌     | ❌     | ✅                 |
+| Buy minutes                  | ❌     | ❌     | ✅                 |
+| Manage subscription          | ❌     | ❌     | ✅                 |
+
+_\* Requires a Docker Build Cloud seat allocation_

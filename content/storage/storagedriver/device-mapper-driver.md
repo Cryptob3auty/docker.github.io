@@ -1,10 +1,19 @@
 ---
 description: Learn how to optimize your use of device mapper driver.
 keywords: container, storage, driver, device mapper
-title: Use the Device Mapper storage driver
+title: Use the Device Mapper storage driver (deprecated)
 aliases:
 - /engine/userguide/storagedriver/device-mapper-driver/
 ---
+
+> **Deprecated**
+>
+> The Device Mapper driver [has been deprecated](../../../engine/deprecated.md#device-mapper-storage-driver),
+> and is removed in Docker Engine v25.0. If you are using Device Mapper,
+> you must migrate to a supported storage driver before upgrading to Docker
+> Engine v25.0. Read the [Docker storage drivers](select-storage-driver.md)
+> page for supported storage drivers.
+{ .warning }
 
 Device Mapper is a kernel-based framework that underpins many advanced
 volume management technologies on Linux. Docker's `devicemapper` storage driver
@@ -71,7 +80,7 @@ For production systems, see
     ```
 
     See all storage options for each storage driver in the
-    [daemon reference documentation](/engine/reference/commandline/dockerd/#options-per-storage-driver)
+    [daemon reference documentation](/reference/cli/dockerd/#options-per-storage-driver)
 
     Docker does not start if the `daemon.json` file contains badly-formed JSON.
 
@@ -178,7 +187,7 @@ options in the table above.
 ```
 
 See all storage options for each storage driver in the
-[daemon reference documentation](/engine/reference/commandline/dockerd/#options-per-storage-driver)
+[daemon reference documentation](/reference/cli/dockerd/#options-per-storage-driver)
 
 Restart Docker for the changes to take effect. Docker invokes the commands to
 configure the block device for you.
@@ -431,7 +440,7 @@ If you run into repeated problems with thin pool, you can set the storage option
 `/etc/docker/daemon.json`. For instance, setting it to `10` ensures
 that operations fail with a warning when the free space is at or near 10%.
 See the
-[storage driver options in the Engine daemon reference](/engine/reference/commandline/dockerd/#daemon-storage-driver).
+[storage driver options in the Engine daemon reference](/reference/cli/dockerd/#daemon-storage-driver).
 
 ### Increase capacity on a running device
 
