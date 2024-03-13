@@ -4,11 +4,6 @@ keywords: docker scout, acr, azure, integration, image analysis, security, cves
 title: Azure Container Registry integration
 ---
 
-> **Beta feature**
->
-> The Azure Container Registry (ACR) integration is currently in [Beta](../../../release-lifecycle.md#beta).
-{ .experimental }
-
 Integrating Docker Scout with Azure Container Registry (ACR) lets you view
 image insights for images hosted in ACR repositories. After integrating Docker
 Scout with ACR and activating Docker Scout for a repository, pushing an image
@@ -59,12 +54,14 @@ the Azure resources.
 {{< accordion title="JSON template" >}}
 
 {{< acr-template.inline >}}
-{{ $data := data.GetJSON "https://prod-scout-integration-templates.s3.amazonaws.com/latest/acr_token_template.json" }}
+{{ with resources.GetRemote "https://prod-scout-integration-templates.s3.amazonaws.com/latest/acr_token_template.json" }}
+{{ $data := .Content | transform.Unmarshal }}
 
 ```json
 {{ transform.Remarshal "json" $data }}
 ```
 
+{{ end }}
 {{< /acr-template.inline >}}
 
 {{< /accordion >}}
@@ -75,48 +72,38 @@ the Azure resources.
    Docker Scout Dashboard.
 2. Select the **Analyze my images from another registry** filter option.
 3. Find **Azure Container Registry** in the list, and select **Integrate**.
-4. In the **How to integrate** section, enter a configuration name for this
-   integration. Docker Scout uses this label as a display name for the
-   integration.
+4. In the **How to integrate** section, enter the **Registry hostname** of the
+   registry you want to integrate.
 5. Select **Next**.
-6. Copy the webhook URL.
-7. Select **Deploy to Azure** to open the template deployment wizard in Azure.
+6. Select **Deploy to Azure** to open the template deployment wizard in Azure.
 
    You may be prompted to sign in to your Azure account if you're not already
    signed in.
 
-8. In the template wizard, configure your deployment:
+7. In the template wizard, configure your deployment:
 
    - **Resource group**: enter the same resource group as you're using for the
      container registry. The Docker Scout resources must be deployed to the
      same resource group as the registry.
 
-   - **Docker Scout Webhook**: paste the webhook you copied from Docker Scout
-     earlier.
+   - **Registry name**: the field is pre-filled with the subdomain of the
+     registry hostname.
 
-   - **Registry name**: enter the name of the ACR registry that you want to
-     integrate. The registry name is the same as the subdomain of the registry
-     hostname.
+8. Select **Review + create**, and then **Create** to deploy the template.
 
-9. Select **Review + create**, and then **Create** to deploy the template.
+9. Wait until the deployment is complete.
+10. In the **Deployment details** section click on the newly created resource
+    of the type **Container registry token**. Generate a new password for this token.
+    
+    Alternatively, use the search function in Azure to navigate to the
+    **Container registry** resource that you're looking to integrate, and
+    generate the new password for the created access token.
 
-10. Wait until the deployment is complete.
-11. Use the search function in Azure to navigate to the **Container registry**
-    resource that you're looking to integrate.
-
-12. On the container registry page, select **Tokens** under **Registry
-    permissions**.
-
-13. Select the `docker-scout-readonly-token` and generate a new password for
-    this token.
-
-14. Copy the generated password and head back to the Docker Scout Dashboard to
+11. Copy the generated password and head back to the Docker Scout Dashboard to
     finalize the integration.
 
-15. Enter the **Registry hostname** and paste the generated password into the
-    **Registry token** field.
-
-16. Select **Enable integration**.
+12. Paste the generated password into the **Registry token** field.
+13. Select **Enable integration**.
 
 After selecting **Enable integration**, Docker Scout performs a connection test
 to verify the integration. If the verification was successful, you're
@@ -124,7 +111,7 @@ redirected to the Azure registry summary page, which shows you all your Azure
 integrations for the current organization.
 
 Next, activate Docker Scout for the repositories that you want to analyze in
-[repository settings](../../dashboard.md#repository-settings). When you enable
+[repository settings](https://scout.docker.com/settings/repos/).
 
 After activating repositories, images that you push are analyzed by Docker
 Scout. The analysis results appear in the Docker Scout Dashboard.
@@ -141,14 +128,12 @@ latest image version automatically.
 
 To remove an ACR integration:
 
-1. Go to [Integrations](https://scout.docker.com/settings/integrations/) on the
-   Docker Scout Dashboard.
-2. Select the **Analyze my images from another registry** filter option.
-3. Find **Azure Container Registry** in the list, and select **Manage**.
-4. Find the ACR integration that you want to remove, and select the **Remove**
+1. Go to the [ACR integration page](https://scout.docker.com/settings/integrations/azure/)
+   on the Docker Scout Dashboard.
+2. Find the ACR integration that you want to remove, and select the **Remove**
    button.
-5. In the dialog that opens, confirm by selecting **Remove**.
-6. After removing the integration in the Docker Scout Dashboard, also remove
+3. In the dialog that opens, confirm by selecting **Remove**.
+4. After removing the integration in the Docker Scout Dashboard, also remove
    the Azure resources related to the integration:
 
    - The `docker-scout-readonly-token` token for the container registry.

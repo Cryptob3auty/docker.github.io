@@ -25,11 +25,9 @@ Wasm workloads require the [containerd image store](containerd.md)
 feature to be turned on. If you’re not already using the containerd image store,
 then pre-existing images and containers will be inaccessible.
 
-1. Open the Docker Desktop **Settings**.
-2. Go to **Features in development** and then select the **Beta features** tab.
-3. Check the following checkboxes:
-   - **Use containerd for storing and pulling images**
-   - **Enable Wasm**
+1. Navigate to **Settings** in Docker Desktop.
+2. In the **General** tab, check **Use containerd for pulling and storing images**.
+3. Go to **Features in development** and check the **Enable Wasm** option.
 4. Select **Apply & restart** to save the settings.
 5. In the confirmation dialog, select **Install** to install the Wasm runtimes.
 
@@ -37,7 +35,7 @@ Docker Desktop downloads and installs the following runtimes that you can use
 to run Wasm workloads:
 
 - `io.containerd.slight.v1`
-- `io.containerd.spin.v1`
+- `io.containerd.spin.v2`
 - `io.containerd.wasmedge.v1`
 - `io.containerd.wasmtime.v1`
 - `io.containerd.lunatic.v1`

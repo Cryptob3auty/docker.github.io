@@ -33,30 +33,14 @@ run the following command to clone the repository.
 $ git clone https://github.com/docker/docker-dotnet-sample
 ```
 
-## Test the simple application without Docker (optional)
-
-You can test the sample application locally without Docker before you continue
-building and running the application with Docker. This section requires you to
-have the .NET SDK version 6.0 installed on your machine. Download and install
-[.NET 6.0 SDK](https://dotnet.microsoft.com/download).
-
-Open a terminal, change directory to the `docker-dotnet-sample/src` directory,
-and run the following command.
-
-```console
-$ dotnet run --urls http://localhost:5000
-```
-
-Open a browser and view the application at [http://localhost:5000](http://localhost:5000). You should see a simple web application.
-
-In the terminal, press `ctrl`+`c` to stop the application.
-
 ## Initialize Docker assets
 
 Now that you have an application, you can use `docker init` to create the
 necessary Docker assets to containerize your application. Inside the
 `docker-dotnet-sample` directory, run the `docker init` command in a terminal.
-Refer to the following example to answer the prompts from `docker init`.
+`docker init` provides some default configuration, but you'll need to answer a
+few questions about your application. Refer to the following example to answer
+the prompts from `docker init` and use the same answers for your prompts.
 
 ```console
 $ docker init
@@ -91,8 +75,8 @@ directory.
 ```
 
 To learn more about the files that `docker init` added, see the following:
- - [Dockerfile](../../engine/reference/builder.md)
- - [.dockerignore](../../engine/reference/builder.md#dockerignore-file)
+ - [Dockerfile](../../reference/dockerfile.md)
+ - [.dockerignore](../../reference/dockerfile.md#dockerignore-file)
  - [compose.yaml](../../compose/compose-file/_index.md)
 
 ## Run the application
@@ -135,9 +119,9 @@ In this section, you learned how you can containerize and run your .NET
 application using Docker.
 
 Related information:
- - [Dockerfile reference](../../engine/reference/builder.md)
+ - [Dockerfile reference](../../reference/dockerfile.md)
  - [Build with Docker guide](../../build/guide/index.md)
- - [.dockerignore file reference](../../engine/reference/builder.md#dockerignore-file)
+ - [.dockerignore file reference](../../reference/dockerfile.md#dockerignore-file)
  - [Docker Compose overview](../../compose/_index.md)
 
 ## Next steps

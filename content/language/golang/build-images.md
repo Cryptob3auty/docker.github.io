@@ -17,7 +17,6 @@ application.
 
 To complete this tutorial, you need the following:
 
-- Go version 1.19 or later. Visit the [download page for Go](https://golang.org/dl/) first and install the toolchain.
 - Docker running locally. Follow the [instructions to download and install Docker](../../desktop/index.md).
 - An IDE or a text editor to edit files. [Visual Studio Code](https://code.visualstudio.com/) is a free and popular choice but you can use anything you feel comfortable with.
 - A Git client. This guide uses a command-line based `git` client, but you are free to use whatever works for you.
@@ -93,44 +92,6 @@ func IntMin(a, b int) int {
 }
 ```
 
-## Smoke test the application
-
-Start your application and make sure it’s running. Open your
-terminal and navigate to the directory into which you cloned the project's repository.
-From now on, this guide will refer to this directory as the **project directory**.
-
-```console
-$ go run main.go
-```
-
-This should compile and start the server as a foreground application, outputting
-the banner, as illustrated in the following figure.
-
-```text
-   ____    __
-  / __/___/ /  ___
- / _// __/ _ \/ _ \
-/___/\__/_//_/\___/ v4.10.2
-High performance, minimalist Go web framework
-https://echo.labstack.com
-____________________________________O/_______
-                                    O\
-⇨ http server started on [::]:8080
-```
-
-Run a quick smoke test by accessing the application on `http://localhost:8080`. 
-You can use your favourite web browser, or even a `curl` command in the terminal:
-
-```console
-$ curl http://localhost:8080/
-Hello, Docker! <3
-```
-
-This verifies that the application builds locally and you can start it without an error.
-That's a milestone to celebrate!
-
-Now you're ready to containerize it.
-
 ## Create a Dockerfile for the application
 
 To build a container image with Docker, a `Dockerfile` with build instructions is required.
@@ -194,7 +155,7 @@ COPY go.mod go.sum ./
 >
 > If you'd like to familiarize yourself with the trailing slash treatment by the
 > `COPY` command, see [Dockerfile
-> reference](../../engine/reference/builder.md/#copy). This trailing slash can
+> reference](../../reference/dockerfile.md#copy). This trailing slash can
 > cause issues in more ways than you can imagine.
 
 Now that you have the module files inside the Docker image that you are
@@ -258,7 +219,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy the source code. Note the slash at the end, as explained in
-# https://docs.docker.com/engine/reference/builder/#copy
+# https://docs.docker.com/reference/dockerfile/#copy
 COPY *.go ./
 
 # Build
@@ -268,7 +229,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 # But we can document in the Dockerfile what ports
 # the application is going to listen on by default.
-# https://docs.docker.com/engine/reference/builder/#expose
+# https://docs.docker.com/reference/dockerfile/#expose
 EXPOSE 8080
 
 # Run

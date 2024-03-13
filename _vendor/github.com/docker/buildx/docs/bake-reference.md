@@ -213,7 +213,7 @@ target "webapp" {
 The following table shows the complete list of attributes that you can assign to a target:
 
 | Name                                            | Type    | Description                                                          |
-| ----------------------------------------------- | ------- | -------------------------------------------------------------------- |
+|-------------------------------------------------|---------|----------------------------------------------------------------------|
 | [`args`](#targetargs)                           | Map     | Build arguments                                                      |
 | [`annotations`](#targetannotations)             | List    | Exporter annotations                                                 |
 | [`attest`](#targetattest)                       | List    | Build attestations                                                   |
@@ -233,9 +233,11 @@ The following table shows the complete list of attributes that you can assign to
 | [`platforms`](#targetplatforms)                 | List    | Target platforms                                                     |
 | [`pull`](#targetpull)                           | Boolean | Always pull images                                                   |
 | [`secret`](#targetsecret)                       | List    | Secrets to expose to the build                                       |
+| [`shm-size`](#targetshm-size)                   | List    | Size of `/dev/shm`                                                   |
 | [`ssh`](#targetssh)                             | List    | SSH agent sockets or keys to expose to the build                     |
 | [`tags`](#targettags)                           | List    | Image names and tags                                                 |
 | [`target`](#targettarget)                       | String  | Target build stage                                                   |
+| [`ulimits`](#targetulimits)                     | List    | Ulimit options                                                       |
 
 ### `target.args`
 
@@ -274,13 +276,13 @@ target "db" {
 
 ### `target.annotations`
 
-The `annotations` attribute is a shortcut to allow you to easily set a list of
-annotations on the target.
+The `annotations` attribute lets you add annotations to images built with bake.
+The key takes a list of annotations, in the format of `KEY=VALUE`.
 
 ```hcl
 target "default" {
   output = ["type=image,name=foo"]
-  annotations = ["key=value"]
+  annotations = ["org.opencontainers.image.authors=dvdksn"]
 }
 ```
 
@@ -288,9 +290,24 @@ is the same as
 
 ```hcl
 target "default" {
-  output = ["type=image,name=foo,annotation.key=value"]
+  output = ["type=image,name=foo,annotation.org.opencontainers.image.authors=dvdksn"]
 }
 ```
+
+By default, the annotation is added to image manifests. You can configure the
+level of the annotations by adding a prefix to the annotation, containing a
+comma-separated list of all the levels that you want to annotate. The following
+example adds annotations to both the image index and manifests.
+
+```hcl
+target "default" {
+  output = ["type=image,name=foo"]
+  annotations = ["index,manifest:org.opencontainers.image.authors=dvdksn"]
+}
+```
+
+Read about the supported levels in
+[Specifying annotation levels](https://docs.docker.com/build/building/annotations/#specifying-annotation-levels).
 
 ### `target.attest`
 
@@ -817,6 +834,29 @@ RUN --mount=type=secret,id=KUBECONFIG \
     KUBECONFIG=$(cat /run/secrets/KUBECONFIG) helm upgrade --install
 ```
 
+### `target.shm-size`
+
+Sets the size of the shared memory allocated for build containers when using
+`RUN` instructions.
+
+The format is `<number><unit>`. `number` must be greater than `0`. Unit is
+optional and can be `b` (bytes), `k` (kilobytes), `m` (megabytes), or `g`
+(gigabytes). If you omit the unit, the system uses bytes.
+
+This is the same as the `--shm-size` flag for `docker build`.
+
+```hcl
+target "default" {
+  shm-size = "128m"
+}
+```
+
+> **Note**
+>
+> In most cases, it is recommended to let the builder automatically determine
+> the appropriate configurations. Manual adjustments should only be considered
+> when specific performance tuning is required for complex build scenarios.
+
 ### `target.ssh`
 
 Defines SSH agent sockets or keys to expose to the build.
@@ -862,6 +902,32 @@ target "default" {
   target = "binaries"
 }
 ```
+
+### `target.ulimits`
+
+Ulimits overrides the default ulimits of build's containers when using `RUN`
+instructions and are specified with a soft and hard limit as such:
+`<type>=<soft limit>[:<hard limit>]`, for example:
+
+```hcl
+target "app" {
+  ulimits = [
+    "nofile=1024:1024"
+  ]
+}
+```
+
+> **Note**
+>
+> If you do not provide a `hard limit`, the `soft limit` is used
+> for both values. If no `ulimits` are set, they are inherited from
+> the default `ulimits` set on the daemon.
+
+> **Note**
+>
+> In most cases, it is recommended to let the builder automatically determine
+> the appropriate configurations. Manual adjustments should only be considered
+> when specific performance tuning is required for complex build scenarios.
 
 ## Group
 
@@ -1054,20 +1120,20 @@ target "webapp-dev" {
 
 [attestations]: https://docs.docker.com/build/attestations/
 [bake_stdlib]: https://github.com/docker/buildx/blob/master/bake/hclparser/stdlib.go
-[build-arg]: https://docs.docker.com/engine/reference/commandline/build/#build-arg
-[build-context]: https://docs.docker.com/engine/reference/commandline/buildx_build/#build-context
+[build-arg]: https://docs.docker.com/reference/cli/docker/image/build/#build-arg
+[build-context]: https://docs.docker.com/reference/cli/docker/buildx/build/#build-context
 [cache-backends]: https://docs.docker.com/build/cache/backends/
-[cache-from]: https://docs.docker.com/engine/reference/commandline/buildx_build/#cache-from
-[cache-to]: https://docs.docker.com/engine/reference/commandline/buildx_build/#cache-to
-[context]: https://docs.docker.com/engine/reference/commandline/buildx_build/#build-context
-[file]: https://docs.docker.com/engine/reference/commandline/build/#file
+[cache-from]: https://docs.docker.com/reference/cli/docker/buildx/build/#cache-from
+[cache-to]: https://docs.docker.com/reference/cli/docker/buildx/build/#cache-to
+[context]: https://docs.docker.com/reference/cli/docker/buildx/build/#build-context
+[file]: https://docs.docker.com/reference/cli/docker/image/build/#file
 [go-cty]: https://github.com/zclconf/go-cty/tree/main/cty/function/stdlib
 [hcl-funcs]: https://docs.docker.com/build/bake/hcl-funcs/
-[output]: https://docs.docker.com/engine/reference/commandline/buildx_build/#output
-[platform]: https://docs.docker.com/engine/reference/commandline/buildx_build/#platform
-[run_mount_secret]: https://docs.docker.com/engine/reference/builder/#run---mounttypesecret
-[secret]: https://docs.docker.com/engine/reference/commandline/buildx_build/#secret
-[ssh]: https://docs.docker.com/engine/reference/commandline/buildx_build/#ssh
-[tag]: https://docs.docker.com/engine/reference/commandline/build/#tag
-[target]: https://docs.docker.com/engine/reference/commandline/build/#target
+[output]: https://docs.docker.com/reference/cli/docker/buildx/build/#output
+[platform]: https://docs.docker.com/reference/cli/docker/buildx/build/#platform
+[run_mount_secret]: https://docs.docker.com/reference/dockerfile/#run---mounttypesecret
+[secret]: https://docs.docker.com/reference/cli/docker/buildx/build/#secret
+[ssh]: https://docs.docker.com/reference/cli/docker/buildx/build/#ssh
+[tag]: https://docs.docker.com/reference/cli/docker/image/build/#tag
+[target]: https://docs.docker.com/reference/cli/docker/image/build/#target
 [userfunc]: https://github.com/hashicorp/hcl/tree/main/ext/userfunc

@@ -26,31 +26,15 @@ Clone the sample application to use with this guide. Open a terminal, change dir
 $ git clone https://github.com/docker/python-docker
 ```
 
-## Test the application without Docker (optional)
-
-You can test the application locally without Docker before you continue building and running the application with Docker. This section requires you to have Python 3.11 or later installed on your machine. Download and install [Python](https://www.python.org/downloads/).
-
-Open your terminal and navigate to the working directory you created. Create an environment, install the dependencies, and start the application to make sure it’s running.
-
-```console
-$ cd /path/to/python-docker
-$ python3 -m venv .venv
-$ source .venv/bin/activate
-(.venv) $ python3 -m pip install -r requirements.txt
-(.venv) $ python3 -m flask run
-```
-
-To test that the application is working, open a new browser and navigate to `http://localhost:5000`.
-
-Switch back to the terminal where the server is running and you should see the following requests in the server logs. The data and timestamp will be different on your machine.
-
-```shell
-127.0.0.1 - - [22/Sep/2020 11:07:41] "GET / HTTP/1.1" 200 -
-```
-
 ## Initialize Docker assets
 
-Now that you have an application, you can use `docker init` to create the necessary Docker assets to containerize your application. Inside the `python-docker` directory, run the `docker init` command. Refer to the following example to answer the prompts from `docker init`.
+Now that you have an application, you can use `docker init` to create the
+necessary Docker assets to containerize your application. Inside the
+`python-docker` directory, run the `docker init` command. `docker init` provides
+some default configuration, but you'll need to answer a few questions about your
+application. For example, this application uses Flask to run. Refer to the
+following example to answer the prompts from `docker init` and use the same
+answers for your prompts.
 
 ```console
 $ docker init
@@ -60,6 +44,7 @@ This utility will walk you through creating the following files with sensible de
   - .dockerignore
   - Dockerfile
   - compose.yaml
+  - README.Docker.md
 
 Let's get started!
 
@@ -79,12 +64,13 @@ directory.
 │ ├── .dockerignore
 │ ├── compose.yaml
 │ ├── Dockerfile
+│ ├── README.Docker.md
 │ └── README.md
 ```
 
 To learn more about the files that `docker init` added, see the following:
- - [Dockerfile](../../engine/reference/builder.md)
- - [.dockerignore](../../engine/reference/builder.md#dockerignore-file)
+ - [Dockerfile](../../reference/dockerfile.md)
+ - [.dockerignore](../../reference/dockerfile.md#dockerignore-file)
  - [compose.yaml](../../compose/compose-file/_index.md)
 
 ## Run the application

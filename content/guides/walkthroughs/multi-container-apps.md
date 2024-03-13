@@ -6,7 +6,7 @@ description: Learn how to use Docker to run multi-container applications
 
 If you've already completed the [How do I run a container?](./run-a-container.md) walkthrough, you learned that you must start each container individually. Imagine how great it would be if a tool could start multiple containers with a single command. That tool is Docker Compose.
 
-Before you start, [get Docker Desktop](../../get-docker.md).
+{{< include "guides-get-docker.md" >}}
 
 ## Step 1: Get the sample application
 
@@ -33,13 +33,11 @@ Download the source and extract it.
 
 The sample application is a simple todo application built using ExpressJS and Node.js. The application saves all todos in a MongoDB database. You don't need to know any of these technologies to continue with the walkthrough.
 
-![The sample app architecture](images/getting-started-multi-container.webp?w=400)
+![The sample app architecture](images/getting-started-multi-container.webp?w=450&border=true)
 
 ## Step 2: Dig into the Compose file
 
 View the files of the sample application. Notice that it has a `compose.yaml` file. This file tells Docker how to run your application. Open the `compose.yaml` file in a code or text editor to view what it contains.
-
-![Viewing the Compose file](images/getting-started-compose.webp?w=400)
 
 ## Step 3: Run the application
 
@@ -63,9 +61,9 @@ In the **Containers** tab of Docker Desktop, you should now have an application 
 To view the frontend:
 
 1. In Docker Desktop, expand the application stack in **Containers**.
-2. Select the link to port **3000** in the **Port(s)** column or open [https://localhost:3000](https://localhost:3000)⁠.
+2. Select the link to port **3000** in the **Port(s)** column or open [http://localhost:3000](http://localhost:3000)⁠.
 
-Add some todo tasks in the frontend, and then open [https://localhost:3000](https://localhost:3000) in a new browser tab. Notice that the tasks are still visible.
+Add some todo tasks in the frontend, and then open [http://localhost:3000](http://localhost:3000) in a new browser tab. Notice that the tasks are still visible.
 
 ## Step 5: Develop in your containers
 
@@ -82,7 +80,7 @@ To run Compose Watch and see the real-time changes:
    ```
 2. Open `app/views/todos.ejs` in a text or code editor, then change the text on line 18.
 3. Save the changes in `app/views/todos.ejs`.
-4. View your application at [https://localhost:3000](https://localhost:3000) to see the changes in real-time.
+4. View your application at [http://localhost:3000](http://localhost:3000) to see the changes in real-time.
 
 ## Step 6: Delete everything and start over
 
@@ -93,7 +91,7 @@ To delete the application stack:
 1. Open the **Containers** tab of Docker Desktop
 2. Select the Delete icon next to your application stack.
 
-![Deleting the application stack](images/getting-started-delete-stack.webp?w=300&border=true)
+![Deleting the application stack](images/getting-started-delete-stack.webp?border=true)
 
 After you delete the application stack, follow the steps from [Step 3: Run the
 application](#step-3-run-the-application) to run the application again. Note
@@ -115,4 +113,4 @@ Related information:
 
 Continue to the next walkthrough to learn how to persist data even after deleting the application stack.
 
-{{< button url="./persist-data.md" text="Persist data between containers" >}}
+{{< button url="./persist-data.md" text="Persist container data" >}}

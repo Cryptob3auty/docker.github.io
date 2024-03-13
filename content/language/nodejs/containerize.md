@@ -30,37 +30,14 @@ to clone the repository:
 $ git clone https://github.com/docker/docker-nodejs-sample
 ```
 
-## Test the application without Docker (optional)
-
-You can test the application locally without Docker before you continue building
-and running the application with Docker. This section requires you to have
-Node.js 18 installed on your machine. Download and install
-[Node.js](https://nodejs.org/).
-
-Open a terminal, change directory to the `docker-nodejs-sample` directory, and
-run the following command to install the packages.
-
-```console
-$ npm install
-```
-
-When the packages have finished installing, run the following command to start
-the application.
-
-```console
-$ node src/index.js
-```
-
-Open a browser and view the application at [http://localhost:3000](http://localhost:3000). You should see a simple todo application.
-
-In the terminal, press `ctrl`+`c` to stop the application.
-
 ## Initialize Docker assets
 
 Now that you have an application, you can use `docker init` to create the
 necessary Docker assets to containerize your application. Inside the
 `docker-nodejs-sample` directory, run the `docker init` command in a terminal.
-Refer to the following example to answer the prompts from `docker init`.
+`docker init` provides some default configuration, but you'll need to answer a
+few questions about your application. Refer to the following example to answer
+the prompts from `docker init` and use the same answers for your prompts.
 
 ```console
 $ docker init
@@ -70,6 +47,7 @@ This utility will walk you through creating the following files with sensible de
   - .dockerignore
   - Dockerfile
   - compose.yaml
+  - README.Docker.md
 
 Let's get started!
 
@@ -93,12 +71,13 @@ directory.
 │ ├── Dockerfile
 │ ├── package-lock.json
 │ ├── package.json
+│ ├── README.Docker.md
 │ └── README.md
 ```
 
 To learn more about the files that `docker init` added, see the following:
- - [Dockerfile](../../engine/reference/builder.md)
- - [.dockerignore](../../engine/reference/builder.md#dockerignore-file)
+ - [Dockerfile](../../reference/dockerfile.md)
+ - [.dockerignore](../../reference/dockerfile.md#dockerignore-file)
  - [compose.yaml](../../compose/compose-file/_index.md)
 
 ## Run the application
@@ -143,9 +122,9 @@ In this section, you learned how you can containerize and run your Node.js
 application using Docker.
 
 Related information:
- - [Dockerfile reference](../../engine/reference/builder.md)
+ - [Dockerfile reference](../../reference/dockerfile.md)
  - [Build with Docker guide](../../build/guide/index.md)
- - [.dockerignore file reference](../../engine/reference/builder.md#dockerignore-file)
+ - [.dockerignore file reference](../../reference/dockerfile.md#dockerignore-file)
  - [Docker Compose overview](../../compose/_index.md)
 
 ## Next steps
