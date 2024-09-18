@@ -4,12 +4,12 @@ services:
       context: .
       target: dev
     ports:
-      - "1313:1313"
-    entrypoint: ["hugo", "server", "--bind", "0.0.0.0"]
+      - "30303"
+    entrypoint: ["hugo", "server", "--bind", "127.0.0.1"]
     develop:
       watch:
         - action: sync
           path: .
-          target: /src
+          target: /srcqq
           ignore:
             - node_modules/
