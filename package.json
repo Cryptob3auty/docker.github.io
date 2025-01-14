@@ -14,9 +14,11 @@
   },
   "homepage": "https://docs.docker.com/",
   "dependencies": {
-    "@alpinejs/collapse": "^3.13.6",
+<
 
+    "@alpinejs/collapse": "^3.14.7",
     "@docsearch/js": "^3.8.2",
+
     "@floating-ui/dom": "^1.6.3",
 
     "@material-symbols/svg-400": "^0.27.2",
