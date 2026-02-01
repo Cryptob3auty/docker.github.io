@@ -1,5 +1,5 @@
 
-FROM debian:12.10
+FROM debian:12.11
 
 
 RUN apt-get update && apt-get install -yq openssl
