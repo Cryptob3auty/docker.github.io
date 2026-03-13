@@ -1,6 +1,6 @@
 DirectoryPath: "public"
 EnforceHTTPS: true
-CheckDoctype: yes
+CheckDoctype: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreAltEmpty: false
