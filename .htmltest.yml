@@ -1,11 +1,11 @@
 DirectoryPath: "public"
-EnforceHTTPS: false
-CheckDoctype: false
+EnforceHTTPS: true
+CheckDoctype: yes
 CheckExternal: false
 IgnoreAltMissing: true
-IgnoreAltEmpty: true
+IgnoreAltEmpty: false
 IgnoreEmptyHref: true
-IgnoreDirectoryMissingTrailingSlash: true
+IgnoreDirectoryMissingTrailingSlash: false
 IgnoreURLs:
 - "^/docker-hub/api/latest/.*$"
 - "^/engine/api/v.+/#.*$"
